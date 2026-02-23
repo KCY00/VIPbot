@@ -3,52 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIPbot</title>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .upload { margin: 20px; }
-        button { margin: 10px; }
-    </style>
+    <title>Group Bot Management Panel</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <h1>Welcome to VIPbot</h1>
-    <div class="upload">
-        <h2>Upload Media</h2>
-        <input type="file" id="mediaUpload" accept="image/*,video/*">
-        <button id="uploadBtn">Upload</button>
-    </div>
-    <div>
-        <h2>Payment</h2>
-        <button id="paymentBtn">Pay</button>
-        <button id="contactBtn">Contact Merchant</button>
-    </div>
-    <script>
-        // Scroll functionality for mobile pages
-        window.addEventListener('load', function() {
-            window.scrollTo(0, 1);
-        });
-
-        // Media upload handler
-        document.getElementById('uploadBtn').addEventListener('click', function() {
-            const fileInput = document.getElementById('mediaUpload');
-            const file = fileInput.files[0];
-            if (file) {
-                // Handle file upload to server or Telegram as needed
-                alert('Uploading: ' + file.name);
-            }
-        });
-
-        // Payment button functionality using Telegram Payment API
-        document.getElementById('paymentBtn').addEventListener('click', function() {
-            // Replace with actual API call to Telegram Payment API
-            alert('Initiating payment...');
-        });
-
-        // Contact merchant button functionality
-        document.getElementById('contactBtn').addEventListener('click', function() {
-            // Logic to contact merchant
-            alert('Contacting merchant...');
-        });
-    </script>
+    <header>
+        <h1>Group Bot Management Panel</h1>
+    </header>
+    <main>
+        <section id="media-upload">
+            <h2>Upload Media</h2>
+            <input type="file" id="media-input" accept="image/*,video/*" multiple>
+            <button id="upload-btn">Send Media</button>
+        </section>
+        <section id="media-preview">
+            <h2>Media Preview</h2>
+            <div id="preview-container"></div>
+        </section>
+        <section id="payment-section">
+            <h2>Payment Options</h2>
+            <button id="payment-btn">Pay Now</button>
+            <button id="contact-seller-btn">Contact Seller</button>
+        </section>
+        <section id="logs">
+            <h2>Logs</h2>
+            <ul id="log-list"></ul>
+        </section>
+        <section id="stats">
+            <h2>Data Statistics</h2>
+            <div id="stats-panel"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Group Bot Management Panel</p>
+    </footer>
 </body>
 </html>
+
+
+// JavaScript for functionality (script.js)
+const uploadBtn = document.getElementById('upload-btn');
+const mediaInput = document.getElementById('media-input');
+const previewContainer = document.getElementById('preview-container');
+const paymentBtn = document.getElementById('payment-btn');
+const contactSellerBtn = document.getElementById('contact-seller-btn');
+
+uploadBtn.addEventListener('click', () => {
+    const files = mediaInput.files;
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const mediaElement = document.createElement(file.type.startsWith('image') ? 'img' : 'video');
+            mediaElement.src = event.target.result;
+            mediaElement.controls = true;
+            previewContainer.appendChild(mediaElement);
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+paymentBtn.addEventListener('click', () => {
+    // Integrate Telegram Payment API call here
+    alert('Payment process initiated!');
+});
+
+contactSellerBtn.addEventListener('click', () => {
+    // Handle contact seller logic
+    alert('Contacting Seller!');
+});
+
+// Placeholder for automatic context recognition and log implementation
